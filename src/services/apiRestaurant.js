@@ -6,7 +6,11 @@ export async function getMenu() {
   // fetch won't throw error on 400 errors (e.g. when URL is wrong), so we need to do it manually. This will then go into the catch block, where the message is set
   if (!res.ok) throw Error('Failed getting menu');
 
-  const { data } = await res.json();
+  let { data } = await res.json();
+  data = data.map((item) => {
+    item = { ...item, unitPrice: item.unitPrice * 50 };
+    return item;
+  });
 
   return data;
 }
